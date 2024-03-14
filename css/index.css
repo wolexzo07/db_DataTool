@@ -1,0 +1,71 @@
+body{
+	/**
+	background-image:url("../img/9.png");
+	**/
+	background-color:white;
+	background-repeat:repeat;
+	background-position:;
+	background-size:cover;
+	background-attachment:fixed;
+}
+.div-1{
+	height:200px;
+}
+
+.div-2{
+	height:400px;
+}
+
+.ml-3{
+	margin-left:30px;
+}
+
+.mr-3{
+	margin-right:30px;
+}
+
+.bg-tom{
+	background-color:tomato;
+}
+
+.div-3{
+	color:white;
+}
+.img-ad{
+	width:30px;
+	margin-right:10px;
+}
+
+.menu , .cn{
+	height:900px;
+	opacity:0.9;
+	margin-top:20px;
+}
+
+.menu{
+	background-color:;
+	border-right:;
+}
+
+.cn{
+	background-color:;
+}
+
+.p-image{
+	border-radius:30px;
+}
+
+.profile-img{
+	height:180px;
+	overflow:hidden;
+	margin-bottom:10px;
+	margin-top:50px;
+}
+
+.menu-span{
+	width:200px;
+}
+
+.slide-contrl{
+	margin-top:50px;
+}
