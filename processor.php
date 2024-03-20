@@ -1,22 +1,22 @@
 <?php
-$str = "
-	wtoken VARCHAR(255) NOT NULL,
-	utoken VARCHAR(255) NOT NULL,
-	account_id VARCHAR(255) NOT NULL,
-	customer_id VARCHAR(255) NOT NULL,
-	trans_id VARCHAR(255) NOT NULL,
-	drcr VARCHAR(10) NOT NULL,
-	amount DOUBLE NOT NULL,
-	current_balance DOUBLE NOT NULL,
-	previous_balance DOUBLE NOT NULL,
-	ref VARCHAR(255) NOT NULL,
-	status VARCHAR(255) NOT NULL,
-	source VARCHAR(100) NOT NULL,
-	payment_type VARCHAR(100) NOT NULL,
-	payment_method VARCHAR(100) NOT NULL,
-	organization_id VARCHAR(255) NOT NULL,
-	comment VARCHAR(255) NOT NULL
-";
+
+if(!isset($_POST["input"])){
+	?>
+	<script>
+		alert("Missing parameter!");
+	</script>
+	<?php
+	exit();
+}
+
+function eliminateEnum($text) {
+    $pattern = '/ENUM\([^)]*\)/';
+    $cleanedText = preg_replace($pattern, '', $text);
+    return $cleanedText;
+}
+
+
+$str = eliminateEnum($_POST["input"]);
 
 $split = explode(",",$str);
 $counter = count($split);
@@ -27,8 +27,9 @@ for($i = 0 ; $i < $counter; $i++){
 	
 	$re_split = explode(" " , $split[$i]);
 	$rspacer = trim($re_split[0]);
-	$rspace[] = trim($re_split[0]);
-	$rspace_values[] = "'$".$rspacer."'";
+	$rspace[] = " ".trim($re_split[0])." ";
+	$rspace_values[] = " "."'$".$rspacer."'"." ";
+	$value_updates[] = $rspacer." = "." "."'$".$rspacer."'"." ";
 }
 
 //echo implode("," , $rspace)."<br/><br/>";
@@ -40,28 +41,69 @@ $getcount = count($rspace);
 
 for($i = 0 ; $i < $getcount; $i++){
 	
-	$insertion[] =  "'"."'";
+	$insertion[] =  "' "." '";
 	
 }
 
 //echo implode("," , $insertion)."<br/>";
 
 ?>
-	<table border="1px" width="100%" cellspacing="0px" cellpadding="12px">
-		
-		<tr style="text-transform:uppercase;" align="left"><th>Total column excluding id</th></tr>
-		<tr align="left"><td><?php echo $getcount;?></td></tr>
-		
-		<tr style="text-transform:uppercase;" align="left"><th>Table Column Names</th></tr>
-		<tr align="left"><td><?php echo implode("," , $rspace);?></td></tr>
-		
-		<tr style="text-transform:uppercase;" align="left"><th>Table Column Value</th></tr>
-		<tr align="left"><td><?php echo implode("," , $rspace_values);?></td></tr>
-		
-		<tr style="text-transform:uppercase;" align="left"><th>Table Column Values Carrier</th></tr>
-		<tr align="left"><td><?php echo implode("," , $insertion);?></td></tr>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Bootstrap Tutorial</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="css/index.css" rel="stylesheet"/>
+  </head>
+  <body>
+    
+	<div class="container-fluid">
 	
-	</table>
+		<div class="row mb-3">
+		
+			<div class="col-12 mt-3">
+				<h4 class="mb-4 fw-bold">GENERATED DATABASE TABLE</h4>
+				<table class="table" border="1px" cellspacing="0px" cellpadding="12px">
+					
+					<tr style="text-transform:uppercase;" align="left">
+					<th class="text-center"><span class="badge bg-warning">Total column excluding id</span> = <span class="badge bg-primary"><?php echo $getcount;?></span></th></tr>
+					<!--<tr align="left"><td></td></tr>--->
+					
+					<tr style="text-transform:uppercase;" align="left">
+					<th>Table Column Names</th></tr>
+					<tr align="left"><td><?php echo implode("," , $rspace);?></td></tr>
+					
+					<tr style="text-transform:uppercase;" align="left">
+					<th>Table Column Value (INSERT)</th></tr>
+					<tr align="left"><td><?php echo implode("," , $rspace_values);?></td></tr>
+
+					<tr style="text-transform:uppercase;" align="left">
+					<th>Table Column Value (UPDATE)</th></tr>
+					<tr align="left"><td><?php echo implode("," , $value_updates);?></td></tr>
+					
+					<tr style="text-transform:uppercase;" align="left">
+					<th>Table Column Values Carrier</th></tr>
+					<tr align="left"><td><?php echo implode("," , $insertion);?></td></tr>
+
+
+					<tr style="text-transform:uppercase;" align="left">
+					<th>SQL QUERY INPUT</th></tr>
+					<tr align="left"><td><?php echo $_POST["input"];?></td></tr>
+				
+				</table>
+				
+				<div align="center"><button class="btn btn-primary mt-2" onclick="window.location='./'">GO HOME</button></center>
+			
+			</div>
+		
+		</div>
+	</div>
+	
+    <script src="js/bootstrap.bundle.min.js" ></script>
+  </body>
+</html>
 <?php
 
 ?>
